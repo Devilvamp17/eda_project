@@ -1,0 +1,76 @@
+# EDA Report for Amount Prediction Dataset
+
+## Dataset Overview
+- Total entries: 11251
+- Number of columns: 15
+- Columns: User_ID, Cust_name, Product_ID, Gender, Age Group, Age, Marital_Status, State, Zone, Occupation, Product_Category, Orders, Amount, Status, unnamed1
+
+## Null Value Summary
+- Amount: 12 missing
+- Status: 11251 missing (all values missing)
+- unnamed1: 11251 missing (all values missing)
+
+## Actions Taken
+- Dropped columns: ['Status', 'unnamed1', 'User_ID']
+- Dropped rows with missing 'Amount'
+
+---
+
+## Gender Distribution
+- Female: 7832
+- Male: 3407
+- Majority of users are Female.
+
+## Amount by Gender
+- Total amount is higher for Female customers.
+- Gender imbalance might influence prediction results.
+
+---
+
+## Correlation Analysis
+- No strong correlation among numerical columns.
+- Amount has negligible correlation with Age (0.03), Marital_Status (-0.02), Orders (-0.01)
+
+---
+
+## Zero Values in Numerical Columns
+- Marital_Status has 6450 zero values (likely binary encoded)
+- Other columns have no significant zero counts.
+
+---
+
+## Distributions Before Scaling
+- **Age**: Skew = 1.19 (right-skewed), Kurtosis = 2.47 (peaked)
+- **Marital_Status**: Skew = 0.32, Kurtosis = -1.90 (bimodal/binary)
+- **Orders**: Skew = 0.02, Kurtosis = -1.35 (evenly spread categories)
+- **Amount**: Skew = 0.56, Kurtosis = -0.54 (moderate positive skew)
+
+---
+
+## Scaling Strategy
+- Applied StandardScaler for near-normal distributions
+- Applied PowerTransformer (Yeo-Johnson) for moderate skew
+- Applied RobustScaler for highly skewed distributions
+
+## Post-scaling Checks
+- All numerical distributions re-evaluated visually
+- Skewness reduced for predictive modeling
+
+---
+
+## Categorical Encoding
+- Applied Label Encoding for all object-type columns
+- Columns transformed: Cust_name, Product_ID, Gender, Age Group, State, Zone, Occupation, Product_Category
+
+---
+
+## Feature Importance (RandomForest)
+- Random Forest Regressor used to evaluate feature contributions
+- Most important features for predicting 'Amount' visualized
+
+---
+
+## Final Observations
+- 'Gender' and 'Product_Category' show impact on target variable
+- Skewness and zero imbalance handled
+- Data is prepared for regression modeling on 'Amount'
